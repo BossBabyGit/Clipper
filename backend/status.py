@@ -3,8 +3,8 @@ import os
 from datetime import datetime
 from typing import Dict, List
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DATA_DIR = os.path.join(BASE_DIR, "data")
+from paths import DATA_DIR
+
 STATUS_PATH = os.path.join(DATA_DIR, "status.json")
 
 STEP_DEFS = [

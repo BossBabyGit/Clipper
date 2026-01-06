@@ -1,5 +1,8 @@
 import os
 import subprocess
+from pathlib import Path
+
+from paths import VODS_DIR
 
 FFMPEG = os.getenv("FFMPEG_PATH", "ffmpeg")
 
@@ -14,7 +17,7 @@ def extract_audio(video_path: str, output_audio: str, sample_rate: int = 44100) 
 
 
 if __name__ == "__main__":
-    video = os.getenv("VIDEO", "data/vods/input.mp4")
-    audio = os.getenv("AUDIO", "data/vods/audio.wav")
+    video = os.getenv("VIDEO", str(Path(VODS_DIR) / "input.mp4"))
+    audio = os.getenv("AUDIO", str(Path(VODS_DIR) / "audio.wav"))
     extract_audio(video, audio)
     print("Audio extracted")

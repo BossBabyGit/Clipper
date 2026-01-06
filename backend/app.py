@@ -9,29 +9,24 @@ from starlette.concurrency import run_in_threadpool
 import status
 from clips import list_clips
 from config import load_config, save_config
-from pipeline.extract_audio import extract_audio
-from pipeline.detect_highlights import detect_highlights
+from paths import CLIPS_DIR, HIGHLIGHTS_DIR, VODS_DIR, ensure_directories
 from pipeline.cut_clips import cut_clips
+from pipeline.detect_highlights import detect_highlights
+from pipeline.extract_audio import extract_audio
 from pipeline.generate_subtitles import generate_subtitles
 from render import render_clip
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DATA_DIR = os.path.join(BASE_DIR, "data")
-CLIPS_DIR = os.path.join(DATA_DIR, "clips")
-VODS_DIR = os.path.join(DATA_DIR, "vods")
-HIGHLIGHTS_DIR = os.path.join(DATA_DIR, "highlights")
-
 app = FastAPI()
 
+cors_origins = os.getenv("CLIPPER_CORS_ORIGINS", "http://localhost:5173").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[origin.strip() or "*" for origin in cors_origins],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-for path in (CLIPS_DIR, VODS_DIR, HIGHLIGHTS_DIR):
-    os.makedirs(path, exist_ok=True)
+ensure_directories()
 
 
 async def _run_step(
@@ -122,4 +117,4 @@ def processing_status():
     return status.get_status()
 
 
-app.mount("/clips", StaticFiles(directory=CLIPS_DIR), name="clips")
+app.mount("/clips", StaticFiles(directory=str(CLIPS_DIR)), name="clips")
