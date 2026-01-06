@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# Data outputs
+data/vods/*
+data/highlights/*
+data/clips/*
+data/status.json
+
+# Keep folders
+!data/vods/.gitkeep
+!data/highlights/.gitkeep
+!data/clips/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
