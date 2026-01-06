@@ -1,6 +1,6 @@
 import json, subprocess, os
 
-FFMPEG = os.getenv("FFMPEG_PATH", r"C:\ffmpeg\bin\ffmpeg.exe")
+FFMPEG = os.getenv("FFMPEG_PATH", "ffmpeg")
 
 def render_clip(clip_dir):
     with open(os.path.join(clip_dir, "config.json")) as f:
