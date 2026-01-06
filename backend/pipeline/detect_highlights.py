@@ -1,10 +1,12 @@
 import json
 import os
+from pathlib import Path
 from typing import Dict, List
 
 import cv2
 import librosa
 import numpy as np
+from paths import HIGHLIGHTS_DIR, VODS_DIR
 
 AUDIO_WINDOW = 0.25
 AUDIO_MULT = 2.5
@@ -65,8 +67,8 @@ def detect_highlights(video_path: str, audio_path: str, output_path: str) -> Lis
 
 
 if __name__ == "__main__":
-    VIDEO = os.getenv("VIDEO", "data/vods/input.mp4")
-    AUDIO = os.getenv("AUDIO", "data/vods/audio.wav")
-    OUT = os.getenv("OUT", "data/highlights/highlights.json")
+    VIDEO = os.getenv("VIDEO", str(Path(VODS_DIR) / "input.mp4"))
+    AUDIO = os.getenv("AUDIO", str(Path(VODS_DIR) / "audio.wav"))
+    OUT = os.getenv("OUT", str(Path(HIGHLIGHTS_DIR) / "highlights.json"))
     detected = detect_highlights(VIDEO, AUDIO, OUT)
     print("Detected highlights:", detected)
