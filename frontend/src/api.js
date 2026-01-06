@@ -1,4 +1,4 @@
-const API = "http://localhost:8000";
+export const API = "http://localhost:8000";
 
 export const uploadVideo = file => {
   const f = new FormData();
@@ -7,3 +7,5 @@ export const uploadVideo = file => {
 };
 
 export const getClips = () => fetch(`${API}/clips`).then(r => r.json());
+
+export const getStatus = () => fetch(`${API}/status`).then(r => r.json());
